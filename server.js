@@ -39,6 +39,7 @@ function startApp() {
           'Remove Employee',
           'Update Employee role',
           'Update Employee Manager',
+          'Exit',
         ],
       },
     ])
@@ -65,18 +66,28 @@ function startApp() {
         case 'Update Employee Manager':
           updateEmployeeManager();
           break;
+        case 'Exit':
+          connection.end();
+          console.log('Connection to server has ended');
+          break;
       }
     });
 }
 
 //Function to view all employees
+function viewAllEmployees() {}
 
 //Funtion to view employees by department
+function viewAllEmployeesByDepartment() {}
 
 //Funtion to view employees by manager
+function viewAllEmployeesByManager() {}
 
 //Function to remove employee
+function removeEmployee() {}
 
 //Function to update employee role
+function updateEmployeeRole() {}
 
 //Function to update employee manager
+function updateEmployeeManager() {}
