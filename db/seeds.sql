@@ -10,9 +10,9 @@ INSERT INTO department (name)
 VALUE ('Legal');
 
 --Role
-INSERT INTO role ()
+INSERT INTO role (title, salary, department_id)
 VALUE ()
 
 --Employees
-INSERT INTO employee
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUE ()
