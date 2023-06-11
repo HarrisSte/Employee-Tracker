@@ -1,5 +1,6 @@
 -- Dropping database and creating new databases 
 DROP DATABASE IF EXISTS employee_trackerDB;
+
 CREATE DATABASE employee_trackerDB;
 
 --Using new database
@@ -28,4 +29,3 @@ CREATE TABLE employee (
     manager_id INT NOT NULL,
     PRIMARY KEY (id)
 );
-
