@@ -3,13 +3,12 @@ const inquirer = require('inquirer');
 const mysql2 = require('mysql2');
 const util = require('util');
 
-const PORT = process.env.PORT || 3001;
 
 //Connection to database
 const connection = mysql.createConnection(
   {
     host: 'localhost',
-    port: 3001,
+    port: 3306,
     user: 'root',
     password: '',
     database: 'employee_trackerDB',
