@@ -1,6 +1,7 @@
 //Dependencies
 const inquirer = require('inquirer');
 const mysql2 = require('mysql2');
+const util = require('util');
 
 const PORT = process.env.PORT || 3001;
 
@@ -15,6 +16,8 @@ const connection = mysql.createConnection(
   },
   console.log(`Connected to the employee_trackerDB database.`)
 );
+
+connection.query = util.promisify(connection.query);
 
 //Connect to MySQL server
 connection.connect((err) => {
