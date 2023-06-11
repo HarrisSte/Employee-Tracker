@@ -1,16 +1,16 @@
 --Seeds for database 
 --Department
 INSERT INTO
-    department (name) VALUE ('Sales');
+    department (department_name) VALUE ('Sales');
 
 INSERT INTO
-    department (name) VALUE ('Engineering');
+    department (department_name) VALUE ('Engineering');
 
 INSERT INTO
-    department (name) VALUE ('Finance');
+    department (department_name) VALUE ('Finance');
 
 INSERT INTO
-    department (name) VALUE ('Legal');
+    department (department_name) VALUE ('Legal');
 
 --Role
 INSERT INTO role (title, salary, department_id) 
