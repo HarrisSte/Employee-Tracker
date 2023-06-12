@@ -25,6 +25,8 @@ connection.connect((err) => {
   startApp();
 });
 
+//Find package that will have a 'employee tracker' display
+
 //Function to start the application
 function startApp() {
   inquirer
