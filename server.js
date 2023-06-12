@@ -4,7 +4,7 @@ const mysql2 = require('mysql2');
 const util = require('util');
 
 //Connection to database
-const connection = mysql.createConnection(
+const connection = mysql2.createConnection(
   {
     host: 'localhost',
     port: 3306,
@@ -86,10 +86,32 @@ function viewAllEmployees() {
   });
 }
 
-//Funtion to view employees by department
-function viewAllEmployeesByDepartment() {}
+// Function to view employees by department
+function viewAllEmployeesByDepartment() {
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'department',
+        message: 'Select a department:',
+        choices: ['Sales', 'Engineering', 'Finance', 'Legal'],
+      },
+    ])
+    .then((answers) => {
+      const department = answers.department;
+      connection.query(
+        'SELECT employees.id, employees.first_name, employees.last_name, roles.title FROM employees INNER JOIN roles ON employees.roles_id = roles.id INNER JOIN department ON roles.department_id = department.id WHERE department.department_name = ?',
+        [department],
+        (err, res) => {
+          if (err) throw err;
+          console.table(res);
+          startApp();
+        }
+      );
+    });
+}
 
-//Funtion to view employees by manager
+// Function to view employees by manager
 function viewAllEmployeesByManager() {}
 
 //Function to remove employee
