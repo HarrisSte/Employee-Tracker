@@ -3,7 +3,6 @@ const inquirer = require('inquirer');
 const mysql2 = require('mysql2');
 const util = require('util');
 
-
 //Connection to database
 const connection = mysql.createConnection(
   {
@@ -78,8 +77,14 @@ function startApp() {
     });
 }
 
-//Function to view all employees
-function viewAllEmployees() {}
+// Function to view all employees
+function viewAllEmployees() {
+  connection.query('SELECT * FROM employees', (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    startApp();
+  });
+}
 
 //Funtion to view employees by department
 function viewAllEmployeesByDepartment() {}
