@@ -1,4 +1,4 @@
-
+--Seeds for department, role, and employee
 INSERT INTO department (department_name)
 VALUES ('Sales'),
        ('Engineering'),
