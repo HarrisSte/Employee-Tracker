@@ -1,6 +1,5 @@
 -- Dropping database and creating new database
 DROP DATABASE IF EXISTS employee_trackerDB;
-
 CREATE DATABASE employee_trackerDB;
 
 -- Using new database
@@ -13,7 +12,7 @@ CREATE TABLE department (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE roles (
+CREATE TABLE role (
     id INT AUTO_INCREMENT NOT NULL,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL(10,2) NOT NULL,
@@ -22,12 +21,11 @@ CREATE TABLE roles (
     FOREIGN KEY (department_id) REFERENCES department(id)
 );
 
-CREATE TABLE employees (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  first_name VARCHAR(255) NOT NULL,
-  last_name VARCHAR(255) NOT NULL,
-  roles_id INT,
-  manager VARCHAR(255),
-  FOREIGN KEY (roles_id) REFERENCES roles(id)
+CREATE TABLE employee (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    role_id INT,
+    manager_id VARCHAR(30),
+    FOREIGN KEY (role_id) REFERENCES role(id)
 );
-
