@@ -2,6 +2,7 @@
 const inquirer = require('inquirer');
 const mysql2 = require('mysql2');
 const util = require('util');
+const figlet = require('figlet');
 
 //Connection to database
 const connection = mysql2.createConnection(
