@@ -1,9 +1,9 @@
 -- Dropping database and creating new database
-DROP DATABASE IF EXISTS employee_trackerDB;
-CREATE DATABASE employee_trackerDB;
+DROP DATABASE IF EXISTS employeetracker_db;
+CREATE DATABASE employeetracker_db;
 
 -- Using new database
-USE employee_trackerDB;
+USE employeetracker_db;
 
 -- Creating tables
 CREATE TABLE department (
