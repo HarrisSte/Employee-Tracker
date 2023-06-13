@@ -25,7 +25,16 @@ connection.connect((err) => {
   startApp();
 });
 
-//Find package that will have a 'employee tracker' display
+//Figlet display 'Employee Tracker' using ascii
+figlet('Employee Tracker', function (err, data) {
+  if (err) {
+    console.log('Something went wrong...');
+    console.dir(err);
+    return;
+  }
+  console.log(data);
+});
+
 
 //Function to start the application
 function startApp() {
