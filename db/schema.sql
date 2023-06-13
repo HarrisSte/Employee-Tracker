@@ -19,16 +19,15 @@ CREATE TABLE roles (
     salary DECIMAL(10,2) NOT NULL,
     department_id INT,
     PRIMARY KEY (id),
-    CONSTRAINT FK_roles_department_id FOREIGN KEY (department_id) REFERENCES department(id)
+    FOREIGN KEY (department_id) REFERENCES department(id)
 );
 
 CREATE TABLE employees (
-    id INT AUTO_INCREMENT NOT NULL,
-    first_name VARCHAR(30) NOT NULL,
-    last_name VARCHAR(30) NOT NULL,
-    roles_id INT,
-    manager_id INT,
-    PRIMARY KEY (id),
-    CONSTRAINT FK_employees_roles_id FOREIGN KEY (roles_id) REFERENCES roles(id),
-    CONSTRAINT FK_employees_manager_id FOREIGN KEY (manager_id) REFERENCES employees(id)
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  roles_id INT,
+  manager VARCHAR(255),
+  FOREIGN KEY (roles_id) REFERENCES roles(id)
 );
+

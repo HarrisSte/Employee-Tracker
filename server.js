@@ -25,8 +25,16 @@ connection.connect((err) => {
   startApp();
 });
 
-//Figlet display 'Employee Tracker' using ascii
-figlet('Employee Tracker', function (err, data) {
+//Figlet display 'Employee Tracker' using ASCII art
+const options = {
+  font: 'Standard',
+  horizontalLayout: 'default',
+  verticalLayout: 'default',
+  width: 80,
+  whitespaceBreak: true,
+};
+
+figlet('Employee Tracker', options, function (err, data) {
   if (err) {
     console.log('Something went wrong...');
     console.dir(err);
@@ -34,7 +42,6 @@ figlet('Employee Tracker', function (err, data) {
   }
   console.log(data);
 });
-
 
 //Function to start the application
 function startApp() {
@@ -122,13 +129,105 @@ function viewAllEmployeesByDepartment() {
 }
 
 // Function to view employees by manager
-function viewAllEmployeesByManager() {}
+function viewAllEmployeesByManager() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'manager',
+        message: 'Enter the manager name:',
+      },
+    ])
+    .then((answers) => {
+      const manager = answers.manager;
+      const query = 'SELECT * FROM employees WHERE manager = ?';
+      connection.query(query, [manager], (err, results) => {
+        if (err) throw err;
+        console.log(results);
+        startApp();
+      });
+    });
+}
 
-//Function to remove employee
-function removeEmployee() {}
+// Function to remove employee
+function removeEmployee() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'employeeId',
+        message: 'Enter the ID or name of the employee to remove:',
+      },
+    ])
+    .then((answers) => {
+      const employeeId = answers.employeeId;
+      const query = 'DELETE FROM employees WHERE id = ? OR name = ?';
+      connection.query(query, [employeeId, employeeId], (err, results) => {
+        if (err) throw err;
+        console.log('Employee removed successfully.');
+        startApp();
+      });
+    });
+}
 
-//Function to update employee role
-function updateEmployeeRole() {}
+// Function to update employee role
+function updateEmployeeRole() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'employeeId',
+        message: 'Enter the ID or name of the employee to update:',
+      },
+      {
+        type: 'input',
+        name: 'newRole',
+        message: 'Enter the new role for the employee:',
+      },
+    ])
+    .then((answers) => {
+      const employeeId = answers.employeeId;
+      const newRole = answers.newRole;
+      const query = 'UPDATE employees SET role = ? WHERE id = ? OR name = ?';
+      connection.query(
+        query,
+        [newRole, employeeId, employeeId],
+        (err, results) => {
+          if (err) throw err;
+          console.log('Employee role updated successfully.');
+          startApp();
+        }
+      );
+    });
+}
 
-//Function to update employee manager
-function updateEmployeeManager() {}
+// Function to update employee manager
+function updateEmployeeManager() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'employeeId',
+        message: 'Enter the ID or name of the employee to update:',
+      },
+      {
+        type: 'input',
+        name: 'newManager',
+        message: 'Enter the new manager for the employee:',
+      },
+    ])
+    .then((answers) => {
+      const employeeId = answers.employeeId;
+      const newManager = answers.newManager;
+      const query = 'UPDATE employees SET manager = ? WHERE id = ? OR name = ?';
+      connection.query(
+        query,
+        [newManager, employeeId, employeeId],
+        (err, results) => {
+          if (err) throw err;
+          console.log('Employee manager updated successfully.');
+          startApp();
+        }
+      );
+    });
+}

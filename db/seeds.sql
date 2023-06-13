@@ -1,16 +1,11 @@
 --Seeds for database 
 --Department
-INSERT INTO
-    department (department_name) VALUES ('Sales');
+INSERT INTO department (department_id)
+   VALUES ('Sales'),
+          ('Engineering'),
+          ('Finance'),
+          ('Legal');
 
-INSERT INTO
-    department (department_name) VALUES ('Engineering');
-
-INSERT INTO
-    department (department_name) VALUES ('Finance');
-
-INSERT INTO
-    department (department_name) VALUES ('Legal');
 
 --Role
 INSERT INTO role (title, salary, department_id) 
@@ -22,8 +17,15 @@ INSERT INTO role (title, salary, department_id)
          ('Legal Team Lead', 500000, 4),
          ('Lawyer', 350000, 4);
 
+
+--Managers
+-- INSERT INTO manager (first_name, last_name)
+--     VALUES ('')
+--            ('')
+--            ('')
+            
 --Employees
-INSERT INTO employee (first_name, last_name, role_id, manager_id) 
+INSERT INTO employees (first_name, last_name, role_id, manager_id) 
   VALUES ('Sylvanas', 'Windrunner', 1, NULL),
          ('Vanessa', 'VanCleef', 2, 1),
          ('Lady', 'Liadrin', 2, 1),
