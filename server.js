@@ -56,6 +56,8 @@ function startApp() {
           'View all employees by Department',
           'View all employees by Manager',
           'Add Employee',
+          'Add Department',
+          'Add Role',
           'Remove Employee',
           'Update Employee role',
           'Update Employee Manager',
@@ -76,6 +78,12 @@ function startApp() {
           break;
         case 'Add Employee':
           addEmployee();
+          break;
+        case 'Add Department':
+          addDepartment();
+          break;
+        case 'Add Role':
+          addRole();
           break;
         case 'Remove Employee':
           removeEmployee();
@@ -240,6 +248,79 @@ function updateEmployeeRole() {
       });
   });
 }
+
+// Function to add department
+function addDepartment() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'departmentName',
+        message: 'Enter the name of the department:',
+      },
+    ])
+    .then((answers) => {
+      const departmentName = answers.departmentName;
+      const query = 'INSERT INTO department (department_name) VALUES (?)';
+      connection.query(query, [departmentName], (err, results) => {
+        if (err) throw err;
+        console.log('Department added successfully.');
+        startApp();
+      });
+    });
+}
+
+// Function to add role
+function addRole() {
+  connection.query('SELECT * FROM department', (err, results) => {
+    if (err) throw err;
+
+    const departmentChoices = [];
+    for (let i = 0; i < results.length; i++) {
+      departmentChoices.push({
+        name: results[i].department_name,
+        value: results[i].id,
+      });
+    }
+
+    inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'roleTitle',
+          message: 'Enter the title of the role:',
+        },
+        {
+          type: 'input',
+          name: 'roleSalary',
+          message: 'Enter the salary for the role:',
+        },
+        {
+          type: 'list',
+          name: 'roleDepartment',
+          message: 'Select the department for the role:',
+          choices: departmentChoices,
+        },
+      ])
+      .then((answers) => {
+        const roleTitle = answers.roleTitle;
+        const roleSalary = answers.roleSalary;
+        const roleDepartment = answers.roleDepartment;
+        const query =
+          'INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)';
+        connection.query(
+          query,
+          [roleTitle, roleSalary, roleDepartment],
+          (err, results) => {
+            if (err) throw err;
+            console.log('Role added successfully.');
+            startApp();
+          }
+        );
+      });
+  });
+}
+
 
 // Function to update employee manager
 function updateEmployeeManager() {
