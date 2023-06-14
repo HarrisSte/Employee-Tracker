@@ -1,11 +1,8 @@
---Seeds for department, role, and employee
 INSERT INTO department (department_name)
 VALUES ('Sales'),
        ('Engineering'),
        ('Finance'),
        ('Legal');
-
-
 INSERT INTO role (title, salary, department_id) 
 VALUES ('Sales Lead', 70000, 1),
        ('Salesperson', 50000, 1),
@@ -14,7 +11,6 @@ VALUES ('Sales Lead', 70000, 1),
        ('Accountant', 100000, 3),
        ('Legal Team Lead', 500000, 4),
        ('Lawyer', 350000, 4);
-
 INSERT INTO employee (first_name, last_name, role_id, manager_id) 
 VALUES ('Sylvanas', 'Windrunner', 1, NULL),
        ('Vanessa', 'VanCleef', 2, 1),
