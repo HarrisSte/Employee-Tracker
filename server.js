@@ -401,6 +401,75 @@ function deleteEmployee() {
       });
     });
 }
+
+// Function to delete department
+function deleteDepartment() {
+  connection.query('SELECT * FROM department', (err, results) => {
+    if (err) throw err;
+
+    const departmentChoices = [];
+    for (let i = 0; i < results.length; i++) {
+      departmentChoices.push({
+        name: results[i].department_name,
+        value: results[i].id,
+      });
+    }
+
+    inquirer
+      .prompt([
+        {
+          type: 'list',
+          name: 'department',
+          message: 'Select the department to delete:',
+          choices: departmentChoices,
+        },
+      ])
+      .then((answers) => {
+        const departmentId = answers.department;
+        const query = 'DELETE FROM department WHERE id = ?';
+        connection.query(query, [departmentId], (err, results) => {
+          if (err) throw err;
+          console.log('Department deleted successfully!');
+          startApp();
+        });
+      });
+  });
+}
+
+// Function to delete role
+function deleteRole() {
+  connection.query('SELECT * FROM role', (err, results) => {
+    if (err) throw err;
+
+    const roleChoices = [];
+    for (let i = 0; i < results.length; i++) {
+      roleChoices.push({
+        name: results[i].title,
+        value: results[i].id,
+      });
+    }
+
+    inquirer
+      .prompt([
+        {
+          type: 'list',
+          name: 'role',
+          message: 'Select the role to delete:',
+          choices: roleChoices,
+        },
+      ])
+      .then((answers) => {
+        const roleId = answers.role;
+        const query = 'DELETE FROM role WHERE id = ?';
+        connection.query(query, [roleId], (err, results) => {
+          if (err) throw err;
+          console.log('Role deleted successfully!');
+          startApp();
+        });
+      });
+  });
+}
+
 // Function to update employee manager
 function updateEmployeeManager() {
   connection.query(
