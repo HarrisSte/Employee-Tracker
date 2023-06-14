@@ -381,6 +381,26 @@ function addEmployee() {
   });
 }
 
+// Function to delete employee
+function deleteEmployee() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'employeeId',
+        message: 'Enter the ID of the employee to delete:',
+      },
+    ])
+    .then((answers) => {
+      const employeeId = answers.employeeId;
+      const query = 'DELETE FROM employee WHERE id = ?';
+      connection.query(query, [employeeId], (err, results) => {
+        if (err) throw err;
+        console.log('Employee deleted successfully!');
+        startApp();
+      });
+    });
+}
 // Function to update employee manager
 function updateEmployeeManager() {
   connection.query(
