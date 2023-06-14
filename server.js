@@ -1,19 +1,19 @@
 //Dependencies
 const inquirer = require('inquirer');
-const mysql2 = require('mysql2');
+const mysql = require('mysql2');
 const util = require('util');
 const figlet = require('figlet');
 
 //Connection to database
-const connection = mysql2.createConnection(
+const connection = mysql.createConnection(
   {
     host: 'localhost',
     port: 3306,
     user: 'root',
     password: '',
-    database: 'employee_trackerDB',
+    database: 'employeetracker_db',
   },
-  console.log(`Connected to the employee_trackerDB database.`)
+  console.log(`Connected to the employeetracker_db database.`)
 );
 
 connection.query = util.promisify(connection.query);
@@ -96,7 +96,7 @@ function startApp() {
 
 // Function to view all employees
 function viewAllEmployees() {
-  connection.query('SELECT * FROM employees', (err, res) => {
+  connection.query('SELECT * FROM employee', (err, res) => {
     if (err) throw err;
     console.table(res);
     startApp();
@@ -117,7 +117,7 @@ function viewAllEmployeesByDepartment() {
     .then((answers) => {
       const department = answers.department;
       connection.query(
-        'SELECT employees.id, employees.first_name, employees.last_name, roles.title FROM employees INNER JOIN roles ON employees.roles_id = roles.id INNER JOIN department ON roles.department_id = department.id WHERE department.department_name = ?',
+        'SELECT employee.id, employee.first_name, employee.last_name, role.title FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id WHERE department.department_name = ?',
         [department],
         (err, res) => {
           if (err) throw err;
@@ -140,7 +140,7 @@ function viewAllEmployeesByManager() {
     ])
     .then((answers) => {
       const manager = answers.manager;
-      const query = 'SELECT * FROM employees WHERE manager = ?';
+      const query = 'SELECT * FROM employee WHERE manager = ?';
       connection.query(query, [manager], (err, results) => {
         if (err) throw err;
         console.log(results);
@@ -161,7 +161,7 @@ function removeEmployee() {
     ])
     .then((answers) => {
       const employeeId = answers.employeeId;
-      const query = 'DELETE FROM employees WHERE id = ? OR name = ?';
+      const query = 'DELETE FROM employee WHERE id = ? OR name = ?';
       connection.query(query, [employeeId, employeeId], (err, results) => {
         if (err) throw err;
         console.log('Employee removed successfully.');
@@ -180,15 +180,24 @@ function updateEmployeeRole() {
         message: 'Enter the ID or name of the employee to update:',
       },
       {
-        type: 'input',
+        type: 'list',
         name: 'newRole',
-        message: 'Enter the new role for the employee:',
+        message: 'Enter the new role for the employee!',
+        choices: [
+          'Sales Lead',
+          'Salesperson',
+          'Lead Engineer',
+          'Account Manager',
+          'Accountant',
+          'Legal Team Lead',
+          'Lawyer',
+        ],
       },
     ])
     .then((answers) => {
       const employeeId = answers.employeeId;
       const newRole = answers.newRole;
-      const query = 'UPDATE employees SET role = ? WHERE id = ? OR name = ?';
+      const query = 'UPDATE employee SET role = ? WHERE id = ? OR name = ?';
       connection.query(
         query,
         [newRole, employeeId, employeeId],
@@ -219,7 +228,7 @@ function updateEmployeeManager() {
     .then((answers) => {
       const employeeId = answers.employeeId;
       const newManager = answers.newManager;
-      const query = 'UPDATE employees SET manager = ? WHERE id = ? OR name = ?';
+      const query = 'UPDATE employee SET manager = ? WHERE id = ? OR name = ?';
       connection.query(
         query,
         [newManager, employeeId, employeeId],
