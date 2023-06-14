@@ -108,27 +108,39 @@ function viewAllEmployees() {
 
 // Function to view employees by department
 function viewAllEmployeesByDepartment() {
-  inquirer
-    .prompt([
-      {
-        type: 'list',
-        name: 'department',
-        message: 'Select a department:',
-        choices: ['Sales', 'Engineering', 'Finance', 'Legal'],
-      },
-    ])
-    .then((answers) => {
-      const department = answers.department;
-      connection.query(
-        'SELECT employee.id, employee.first_name, employee.last_name, role.title FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id WHERE department.department_name = ?',
-        [department],
-        (err, res) => {
-          if (err) throw err;
-          console.table(res);
-          startApp();
-        }
-      );
-    });
+  connection.query('SELECT * FROM department', (err, results) => {
+    if (err) throw err;
+
+    const deptChoices = [];
+    for (let i = 0; i < results.length; i++) {
+      deptChoices.push({
+        name: results[i].department_name,
+        value: results[i].id,
+      });
+    }
+
+    inquirer
+      .prompt([
+        {
+          type: 'list',
+          name: 'department',
+          message: 'Select a department:',
+          choices: deptChoices,
+        },
+      ])
+      .then((answers) => {
+        const department = answers.department;
+        connection.query(
+          'SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.department_name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id WHERE department.id = ?',
+          [department],
+          (err, res) => {
+            if (err) throw err;
+            console.table(res);
+            startApp();
+          }
+        );
+      });
+  });
 }
 
 // Function to view employees by manager
