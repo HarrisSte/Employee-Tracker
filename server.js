@@ -96,11 +96,14 @@ function startApp() {
 
 // Function to view all employees
 function viewAllEmployees() {
-  connection.query('SELECT * FROM employee', (err, res) => {
-    if (err) throw err;
-    console.table(res);
-    startApp();
-  });
+  connection.query(
+    'SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.department_name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id',
+    (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      startApp();
+    }
+  );
 }
 
 // Function to view employees by department
@@ -172,42 +175,42 @@ function removeEmployee() {
 
 // Function to update employee role
 function updateEmployeeRole() {
-  inquirer
-    .prompt([
-      {
-        type: 'input',
-        name: 'employeeId',
-        message: 'Enter the ID or name of the employee to update:',
-      },
-      {
-        type: 'list',
-        name: 'newRole',
-        message: 'Enter the new role for the employee!',
-        choices: [
-          'Sales Lead',
-          'Salesperson',
-          'Lead Engineer',
-          'Account Manager',
-          'Accountant',
-          'Legal Team Lead',
-          'Lawyer',
-        ],
-      },
-    ])
-    .then((answers) => {
-      const employeeId = answers.employeeId;
-      const newRole = answers.newRole;
-      const query = 'UPDATE employee SET role = ? WHERE id = ? OR name = ?';
-      connection.query(
-        query,
-        [newRole, employeeId, employeeId],
-        (err, results) => {
+  connection.query('SELECT id, title FROM role', (err, results) => {
+    if (err) throw err;
+
+    const roleChoices = [];
+    for (let i = 0; i < results.length; i++) {
+      roleChoices.push({
+        name: results[i].title,
+        value: results[i].id,
+      });
+    }
+
+    inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'employeeId',
+          message: 'Enter the ID of the employee to update:',
+        },
+        {
+          type: 'list',
+          name: 'newRole',
+          message: 'Select the new role for the employee!',
+          choices: roleChoices,
+        },
+      ])
+      .then((answers) => {
+        const employeeId = answers.employeeId;
+        const roleId = answers.newRole;
+        const query = 'UPDATE employee SET role_id = ? WHERE id = ?';
+        connection.query(query, [roleId, employeeId], (err, results) => {
           if (err) throw err;
           console.log('Employee role updated successfully.');
           startApp();
-        }
-      );
-    });
+        });
+      });
+  });
 }
 
 // Function to update employee manager
