@@ -86,7 +86,13 @@ function startApp() {
           addRole();
           break;
         case 'Remove Employee':
-          removeEmployee();
+          deleteEmployee();
+          break;
+        case 'Delete Department':
+          deleteDepartment();
+          break;
+        case 'Delete Role':
+          deleteRole();
           break;
         case 'Update Employee role':
           updateEmployeeRole();
@@ -96,7 +102,7 @@ function startApp() {
           break;
         case 'Exit':
           connection.end();
-          console.log('Connection to server has ended');
+          console.log('Connection to server has ended. Have a great day!');
           break;
       }
     });
@@ -186,27 +192,6 @@ function viewAllEmployeesByManager() {
         });
     }
   );
-}
-
-// Function to remove employee
-function removeEmployee() {
-  inquirer
-    .prompt([
-      {
-        type: 'input',
-        name: 'employeeId',
-        message: 'Enter the ID or name of the employee to remove:',
-      },
-    ])
-    .then((answers) => {
-      const employeeId = answers.employeeId;
-      const query = 'DELETE FROM employee WHERE id = ? OR name = ?';
-      connection.query(query, [employeeId, employeeId], (err, results) => {
-        if (err) throw err;
-        console.log('Employee removed successfully.');
-        startApp();
-      });
-    });
 }
 
 // Function to update employee role
@@ -321,6 +306,78 @@ function addRole() {
   });
 }
 
+// Function to add employee
+function addEmployee() {
+  connection.query('SELECT * FROM role', (err, results) => {
+    if (err) throw err;
+
+    const roleChoices = [];
+    for (let i = 0; i < results.length; i++) {
+      roleChoices.push({
+        name: results[i].title,
+        value: results[i].id,
+      });
+    }
+
+    connection.query(
+      'SELECT * FROM employee WHERE manager_id IS NULL',
+      (err, results) => {
+        if (err) throw err;
+
+        const managerChoices = [];
+        for (let i = 0; i < results.length; i++) {
+          managerChoices.push({
+            name: `${results[i].first_name} ${results[i].last_name}`,
+            value: results[i].id,
+          });
+        }
+
+        inquirer
+          .prompt([
+            {
+              type: 'input',
+              name: 'firstName',
+              message: 'Enter the first name of the employee:',
+            },
+            {
+              type: 'input',
+              name: 'lastName',
+              message: 'Enter the last name of the employee:',
+            },
+            {
+              type: 'list',
+              name: 'role',
+              message: 'Select the role for the employee:',
+              choices: roleChoices,
+            },
+            {
+              type: 'list',
+              name: 'manager',
+              message: 'Select the manager for the employee:',
+              choices: managerChoices,
+            },
+          ])
+          .then((answers) => {
+            const firstName = answers.firstName;
+            const lastName = answers.lastName;
+            const role = answers.role;
+            const manager = answers.manager;
+            const query =
+              'INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)';
+            connection.query(
+              query,
+              [firstName, lastName, role, manager],
+              (err, results) => {
+                if (err) throw err;
+                console.log('Employee added successfully.');
+                startApp();
+              }
+            );
+          });
+      }
+    );
+  });
+}
 
 // Function to update employee manager
 function updateEmployeeManager() {
