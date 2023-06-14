@@ -59,6 +59,8 @@ function startApp() {
           'Add Department',
           'Add Role',
           'Remove Employee',
+          'Delete Department',
+          'Delete Role',
           'Update Employee role',
           'Update Employee Manager',
           'Exit',
@@ -227,7 +229,7 @@ function updateEmployeeRole() {
         const query = 'UPDATE employee SET role_id = ? WHERE id = ?';
         connection.query(query, [roleId, employeeId], (err, results) => {
           if (err) throw err;
-          console.log('Employee role updated successfully.');
+          console.log('Employee role updated successfully!');
           startApp();
         });
       });
@@ -249,7 +251,7 @@ function addDepartment() {
       const query = 'INSERT INTO department (department_name) VALUES (?)';
       connection.query(query, [departmentName], (err, results) => {
         if (err) throw err;
-        console.log('Department added successfully.');
+        console.log('Department added successfully!');
         startApp();
       });
     });
@@ -298,7 +300,7 @@ function addRole() {
           [roleTitle, roleSalary, roleDepartment],
           (err, results) => {
             if (err) throw err;
-            console.log('Role added successfully.');
+            console.log('Role added successfully!');
             startApp();
           }
         );
@@ -369,7 +371,7 @@ function addEmployee() {
               [firstName, lastName, role, manager],
               (err, results) => {
                 if (err) throw err;
-                console.log('Employee added successfully.');
+                console.log('Employee added successfully!');
                 startApp();
               }
             );
@@ -414,7 +416,7 @@ function updateEmployeeManager() {
           const query = 'UPDATE employee SET manager_id = ? WHERE id = ?';
           connection.query(query, [newManager, employeeId], (err, results) => {
             if (err) throw err;
-            console.log('Employee manager updated successfully.');
+            console.log('Employee manager updated successfully!');
             startApp();
           });
         });
