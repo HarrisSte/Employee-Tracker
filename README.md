@@ -24,8 +24,15 @@ With the ability to view and manage your departments, roles, and employees all i
 
 ## Installation
 
+1. [Inquirer: Version 8.2.4](https://www.npmjs.com/package/inquirer/v/8.2.4)
+2. [MySQL2](https://www.npmjs.com/package/mysql2)
 
 ## Usage
+
+- `npm i @8.2.4`
+  This will install the appropriate npm package.
+- `npm i mysql2`
+  This will install the appropriate SQL database.
 
 ## Demonstration
 
