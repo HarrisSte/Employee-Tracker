@@ -17,7 +17,6 @@ With the ability to view and manage your departments, roles, and employees all i
 - [Installation](#installation)
 - [Usage](#usage)
 - [Demonstration](#demonstration)
-- [Screenshots](#screenshots)
 - [License](#license)
 - [Contributors](#contributors)
 - [Contact](#contact)
@@ -35,8 +34,6 @@ With the ability to view and manage your departments, roles, and employees all i
   This will install the appropriate SQL database.
 
 ## Demonstration
-
-## Screenshots
 
 ## License
 

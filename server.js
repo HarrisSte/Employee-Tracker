@@ -161,39 +161,50 @@ function viewAllEmployeesByDepartment() {
 
 // Function to view employees by manager
 function viewAllEmployeesByManager() {
-  connection.query(
-    'SELECT id, first_name, last_name FROM employee WHERE manager_id IS NULL',
-    (err, results) => {
-      if (err) throw err;
+  connection.query('SELECT * FROM employee', (err, employees) => {
+    if (err) {
+      console.log('An error occurred while fetching employees:');
+      console.error(err);
+      startApp();
+    } else {
+      const managerChoices = employees.map((employee) => ({
+        name: `${employee.first_name} ${employee.last_name}`,
+        value: employee.id,
+      }));
 
-      const managerChoices = [];
-      for (let i = 0; i < results.length; i++) {
-        managerChoices.push({
-          name: `${results[i].first_name} ${results[i].last_name}`,
-          value: results[i].id,
-        });
-      }
       inquirer
         .prompt([
           {
             type: 'list',
             name: 'manager',
-            message: 'Enter the manager id:',
+            message: 'Select a manager:',
             choices: managerChoices,
           },
         ])
         .then((answers) => {
-          const manager = answers.manager;
-          const query =
-            'SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.department_name, CONCAT(manager.first_name, " ", manager.last_name) AS manager_name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id JOIN employee manager ON employee.manager_id = manager.id WHERE manager_id = ?';
-          connection.query(query, [manager], (err, results) => {
-            if (err) throw err;
-            console.table(results);
-            startApp();
-          });
+          const managerId = answers.manager;
+
+          connection.query(
+            'SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.department_name FROM employee INNER JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id WHERE employee.manager_id = ?',
+            [managerId],
+            (err, res) => {
+              if (err) {
+                console.log('An error occurred while fetching employees!');
+                console.error(err);
+              } else {
+                console.table(res);
+              }
+              startApp();
+            }
+          );
+        })
+        .catch((err) => {
+          console.log('An error occurred!');
+          console.error(err);
+          startApp();
         });
     }
-  );
+  });
 }
 
 // Function to update employee role
