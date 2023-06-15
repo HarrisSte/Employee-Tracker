@@ -491,7 +491,7 @@ function updateEmployeeManager() {
       const managerChoices = [];
       for (let i = 0; i < results.length; i++) {
         managerChoices.push({
-          name: `${results[i].first_name} ${results[i].first_name}`,
+          name: `${results[i].first_name} ${results[i].last_name}`,
           value: results[i].id,
         });
       }
