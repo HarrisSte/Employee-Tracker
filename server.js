@@ -13,7 +13,7 @@ const connection = mysql.createConnection(
     password: '',
     database: 'employeetracker_db',
   },
-  console.log(`Connected to the employeetracker_db database.`)
+  console.log(`You are connected to the employeetracker_db database!`)
 );
 
 connection.query = util.promisify(connection.query);
@@ -163,7 +163,7 @@ function viewAllEmployeesByDepartment() {
 function viewAllEmployeesByManager() {
   connection.query('SELECT * FROM employee', (err, employees) => {
     if (err) {
-      console.log('An error occurred while fetching employees:');
+      console.log('An error occurred while fetching employees.');
       console.error(err);
       startApp();
     } else {
