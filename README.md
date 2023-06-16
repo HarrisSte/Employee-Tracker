@@ -36,6 +36,7 @@ With the ability to view and manage your departments, roles, and employees all i
   This will begin the application in your CLI.
 
 ## Demonstration
+[Demo of Application](https://github.com/HarrisSte/Employee-Tracker/assets/126029841/e2745eba-1717-4f89-a81e-0a7d09e02331)
 
 ## License
 
@@ -43,7 +44,7 @@ With the ability to view and manage your departments, roles, and employees all i
 
 ## Contributors
 
-There was a great deal of research done to complete this project. Part of that research was reading through the documentations for MySQL. I also read through materials and articles from StackOverflow, and class resources provided by the bootcamp. I also recieved assistance from my TA instuctors during office hours when I ran into an issue. In addition, I conferred with my classmates and colleagues, as well as Andrew Zimmerman.
+There was a great deal of research done to complete this project. Part of that research was reading through the documentation for MySQL. I also read through materials and articles from StackOverflow, and class resources provided by the bootcamp. I also recieved assistance from my TA instructors during office hours when I ran into an issue. In addition, I conferred with my classmates and colleagues, as well as Andrew Zimmerman.
 
 ## Contact
 
