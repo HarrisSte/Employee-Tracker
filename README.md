@@ -2,7 +2,7 @@
 
 ## Description
 
-Introducing our state-of-the-art Employee Tracker, designed specifically for business owners like you. With this powerful tool at your fingertips, you'll have complete control over managing and organizing the departments, roles, and employees within your company, enabling you to streamline operations and plan for future growth effectively.
+Introducing Employee Tracker, designed specifically for business owners like you. With this powerful tool at your fingertips, you'll have complete control over managing and organizing the departments, roles, and employees within your company, enabling you to streamline operations and plan for future growth effectively.
 
 Our Employee Tracker provides a centralized platform where you can effortlessly view and manage all aspects of your workforce. You'll have real-time access to comprehensive employee profiles, including their job titles, department affiliations, and other relevant details. This allows you to quickly locate specific employees and obtain essential information at a glance.
 
@@ -44,7 +44,7 @@ With the ability to view and manage your departments, roles, and employees all i
 
 ## Contributors
 
-There was a great deal of research done to complete this project. Part of that research was reading through the documentation for MySQL. I also read through materials and articles from StackOverflow, and class resources provided by the bootcamp. I also recieved assistance from my TA instructors during office hours when I ran into an issue. In addition, I conferred with my classmates and colleagues, as well as Andrew Zimmerman.
+There was a great deal of research done to complete this project. Part of that research was reading through the documentation for MySQL. I also read through materials and articles from StackOverflow, and class resources provided by the bootcamp. I also received assistance from my TA instructors during office hours when I ran into an issue. In addition, I conferred with my classmates and colleagues, as well as Andrew Zimmerman.
 
 ## Contact
 
